@@ -7,7 +7,7 @@ import {
   AiFillGithub,
   AiFillCaretUp
 } from 'react-icons/ai';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from "next/image";
 import deved from '../public/dev-ed-wave.png';
 import design from '../public/design.png';
@@ -15,6 +15,7 @@ import code from '../public/code.png';
 import consulting from '../public/consulting.png';
 import web1 from '../public/web1.png';
 import web2 from '../public/web2.png';
+import './globals.css';
 
 const copyToClipboard = (text: string) => {
   if (!navigator.clipboard) {
@@ -27,6 +28,21 @@ const copyToClipboard = (text: string) => {
 };
 
 export default function Home() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
+
   const [darkMode, setDarkMode] = useState(false);
 
   const handleCopyEmail = () => {
@@ -63,6 +79,11 @@ export default function Home() {
               {/* className="flex fixed" */}
             </ul>
           </nav>
+          <div className={`text-4xl text-teal-700 dark:text-teal-400 outline-none bg-white rounded-l flex items-center shadow-xl fixed right-4 justify-center bottom-4 cursor-pointer transition-opacity ${scrollY > 450 ? 'opacity-100' : 'opacity-0'}`}>
+            <a href="#">
+              <AiFillCaretUp />
+            </a>
+          </div>
           <div className="text-center p-10 ">
             <h2 className="text-5xl py-2 text-teal-600 font-medium md:text-6xl dark:text-teal-400">Caio Carvalho</h2>
             <h3 className="text-2xl py-2 md:text-3xl dark:text-white">Developer | Student</h3>
@@ -80,7 +101,7 @@ export default function Home() {
             </a>
           </div>
           <div className="relative mx-auto bg-gradient-to-b from-teal-500 rounded-full w-80 h-80 mt-20 overflow-hidden md:h-96 md:w-96">
-            <Image alt="" src={deved} layout="fill" objectFit="cover" />
+            <Image alt="" src={deved} fill />
           </div>
         </section>
 
@@ -145,18 +166,14 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-10 py-10 lg:flex-row lg:flex-wrap">
             <div className="basis-1/3 flex-1"> {/* Aqui Vai O Site que vou fazer da Consec */}
-              <Image alt="Imagem Portifolios" src={web1} className="rounded-lg object-cover" width={"100"} height={"100"} layout="responsive" />
+              <Image alt="Imagem Portifolios" src={web1} className="rounded-lg object-cover" layout="responsive" />
             </div>
             <div className="basis-1/3 flex-1">
-              <Image alt="Imagem Portifolios" src={web2} className="rounded-lg object-cover" width={"100"} height={"100"} layout="responsive" />
+              <Image alt="Imagem Portifolios" src={web2} className="rounded-lg object-cover" layout="responsive" />
             </div>
           </div>
         </section>
-        <div className="text-5xl flex justify-end gap-16 py-3 text-teal-700 dark:text-teal-400">
-          <a href="#">
-          <AiFillCaretUp />
-          </a>
-        </div>
+        
       </main>
     </div>
   );

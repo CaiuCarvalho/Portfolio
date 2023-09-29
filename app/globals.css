@@ -30,3 +30,8 @@ body {
   font-family: "burtons";
   src: url("../public/Burtons.otf");
 }
+
+.transition-opacity {
+  transition-property: opacity;
+  transition-duration: 0.4s; /* Duração da transição em segundos */
+}
